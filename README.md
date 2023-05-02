@@ -9,7 +9,7 @@ Download the repo and run those commands:
 - cd backend && npm i
 - npm run start
 - continue in another console
-- cd ../frontend && npm i
+- cd frontend && npm i
 - npm start
 - go to http://localhost:3000
 
