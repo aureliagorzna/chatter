@@ -13,4 +13,4 @@ Download the repo and run those commands:
 - npm start
 - go to http://localhost:3000
 
---> Here's a fun fact: the "pawelmeszynski" contributor was actually me forgetting to change git settings before pushing the app on my internship PC
+--> Here's a fun fact: the "pawelmeszynski" contributor was actually me forgetting to change git settings before pushing the app on my internship PC (they set their name globally)
