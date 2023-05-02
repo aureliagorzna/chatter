@@ -1,6 +1,6 @@
 This is a generic chatting app using bcrypt to hash passwords and JWT to authenticate users.
 
-- beta version -
+- beta version
 
 HOW TO RUN
 
