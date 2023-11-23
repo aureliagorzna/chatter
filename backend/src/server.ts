@@ -15,7 +15,7 @@ import cors from 'cors'
 connect(process.env.DATABASE_URL as string)
 const app: Application = express()
 app.use(express.json())
-app.use(cors({ origin: '*' }))
+app.use(cors({ origin: process.env.ALLOWED_DOMAIN }))
 
 let refreshTokens: string[] = []
 
@@ -26,7 +26,7 @@ const generateAccessToken = (user: userProps): string => jwt.sign({
     notifications: user.notifications, 
     conversations: user.conversations, 
     friends: user.friends 
-}, process.env.ACCESS_TOKEN as string, { expiresIn: "10m" })
+}, process.env.ACCESS_TOKEN_SECRET as string, { expiresIn: "10m" })
 const generateRefreshToken = (user: userProps): string => jwt.sign({ _id: user._id, username: user.username, id: user.id, notifications: user.notifications, conversations: user.conversations, friends: user.friends }, process.env.REFRESH_TOKEN as string)
 
 const authorize = (req: Request, res: Response, next: NextFunction): Response<any, Record<string, any>> | void => {
@@ -35,7 +35,7 @@ const authorize = (req: Request, res: Response, next: NextFunction): Response<an
 
     const token = header.split(" ")[1]
 
-    jwt.verify(token, process.env.ACCESS_TOKEN as string, (err, user): Response<any, Record<string, any>> | void => {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as string, (err, user): Response<any, Record<string, any>> | void => {
         if (err) return res.send("Failed")
         req.body.user = user
         next()
