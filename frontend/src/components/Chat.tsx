@@ -42,7 +42,7 @@ const Chat: React.FC<{ chat: conversation, LS_ACCESS_TOKEN: string }> = ({ chat,
             buttonCover.append(backButton)
 
             const token: string = localStorage.getItem(LS_ACCESS_TOKEN as string) as string
-            const queryName: AxiosResponse = await axios.get("/info", {
+            const queryName: AxiosResponse = await axios.get(process.env.REACT_APP_API_URL + "/info", {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -52,7 +52,7 @@ const Chat: React.FC<{ chat: conversation, LS_ACCESS_TOKEN: string }> = ({ chat,
             title.className = "title"
 
             for (let i = 0; i < chat.participants.length; i++) {
-                const resp: AxiosResponse = await axios.post("/getName", { id: chat.participants[i] }, {
+                const resp: AxiosResponse = await axios.post(process.env.REACT_APP_API_URL + "/getName", { id: chat.participants[i] }, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -90,7 +90,7 @@ const Chat: React.FC<{ chat: conversation, LS_ACCESS_TOKEN: string }> = ({ chat,
                 const textfield: HTMLTextAreaElement = document.querySelector(".textfield") as HTMLTextAreaElement
                 const message: string = textfield.value
 
-                await axios.post("/sendmessage",
+                await axios.post(process.env.REACT_APP_API_URL + "/sendmessage",
                     {
                         conversationId: chat._id,
                         senderName: queryName.data.username,
@@ -102,7 +102,7 @@ const Chat: React.FC<{ chat: conversation, LS_ACCESS_TOKEN: string }> = ({ chat,
                     }
                 })
 
-                const messages: AxiosResponse = await axios.post("/getmessages", {
+                const messages: AxiosResponse = await axios.post(process.env.REACT_APP_API_URL + "/getmessages", {
                     conversationId: chat._id
                 }, {
                     headers: {
@@ -151,14 +151,14 @@ const Chat: React.FC<{ chat: conversation, LS_ACCESS_TOKEN: string }> = ({ chat,
 
     const getNames: VoidFunction = async (): Promise<void> => {
         const token: string = localStorage.getItem(LS_ACCESS_TOKEN as string) as string
-        const queryName: AxiosResponse = await axios.get("/info", {
+        const queryName: AxiosResponse = await axios.get(process.env.REACT_APP_API_URL + "/info", {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
         
         for (let i = 0; i < chat.participants.length; i++) {
-            const resp: AxiosResponse = await axios.post("/getName", { id: chat.participants[i] }, {
+            const resp: AxiosResponse = await axios.post(process.env.REACT_APP_API_URL + "/getName", { id: chat.participants[i] }, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

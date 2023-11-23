@@ -9,11 +9,15 @@ const NewAcc: React.FC = (): ReactElement => {
     const create = async (): Promise<void> => {
         if (nameRef == null || pwRef == null) return
         if (nameRef.current == null || pwRef.current == null) return
-        
-        await axios.post("/new", {
-            username: nameRef.current.value,
-            password: pwRef.current.value
-        })
+
+        try {
+            await axios.post(process.env.REACT_APP_API_URL + "/new", {
+                username: nameRef.current.value,
+                password: pwRef.current.value
+            })
+        } catch (err) {
+            console.log(err)
+        }
 
         window.location.pathname = "/login"
     }

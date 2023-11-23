@@ -23,7 +23,7 @@ const Dashboard: React.FC<Tokens> = ({ LS_ACCESS_TOKEN, LS_REFRESH_TOKEN }): Rea
     const sync: VoidFunction = async (): Promise<void> => {
         const token: string = localStorage.getItem(LS_ACCESS_TOKEN as string) as string
 
-        const resp: AxiosResponse = await axios.get("/chats", {
+        const resp: AxiosResponse = await axios.get(process.env.REACT_APP_API_URL + "/chats", {
             headers: {
                 authorization: `Bearer ${token}`
             }
@@ -34,7 +34,7 @@ const Dashboard: React.FC<Tokens> = ({ LS_ACCESS_TOKEN, LS_REFRESH_TOKEN }): Rea
         const conversationsId: string[] = resp.data.conversations
 
         for (let i = 0; i < conversationsId.length; i++) {
-            const activeChat: AxiosResponse = await axios.post("/getchat", { id: conversationsId[i] }, {
+            const activeChat: AxiosResponse = await axios.post(process.env.REACT_APP_API_URL + "/getchat", { id: conversationsId[i] }, {
                 headers: {
                     authorization: `Bearer ${token}`
                 }
@@ -45,7 +45,7 @@ const Dashboard: React.FC<Tokens> = ({ LS_ACCESS_TOKEN, LS_REFRESH_TOKEN }): Rea
     }
 
     const getNewToken: VoidFunction = async (): Promise<void> => {
-        const refresh: AxiosResponse = await axios.post("/token", {
+        const refresh: AxiosResponse = await axios.post(process.env.REACT_APP_API_URL + "/token", {
             token: localStorage.getItem(LS_REFRESH_TOKEN as string)
         })
 
@@ -58,7 +58,7 @@ const Dashboard: React.FC<Tokens> = ({ LS_ACCESS_TOKEN, LS_REFRESH_TOKEN }): Rea
     const getName = async (): Promise<void> => {
         const token: string = localStorage.getItem(LS_ACCESS_TOKEN as string) as string
 
-        const resp: AxiosResponse = await axios.get("/info", {
+        const resp: AxiosResponse = await axios.get(process.env.REACT_APP_API_URL + "/info", {
             headers: {
                 authorization: `Bearer ${token}`
             }
@@ -121,7 +121,7 @@ const Dashboard: React.FC<Tokens> = ({ LS_ACCESS_TOKEN, LS_REFRESH_TOKEN }): Rea
         input.spellcheck = false
         input.className = "friend-input"
 
-        const resp = await axios.get("/userslist")
+        const resp = await axios.get(process.env.REACT_APP_API_URL + "/userslist")
 
         resp.data.forEach((user: any): void => {
             const option: HTMLOptionElement = document.createElement("option") as HTMLOptionElement
@@ -153,7 +153,7 @@ const Dashboard: React.FC<Tokens> = ({ LS_ACCESS_TOKEN, LS_REFRESH_TOKEN }): Rea
 
             const token: string = localStorage.getItem(LS_ACCESS_TOKEN) as string
 
-            const addChat: AxiosResponse = await axios.post("/newchat", { friend: friendName }, {
+            const addChat: AxiosResponse = await axios.post(process.env.REACT_APP_API_URL + "/newchat", { friend: friendName }, {
                 headers: {
                     authorization: `Bearer ${token}`
                 }
@@ -181,7 +181,7 @@ const Dashboard: React.FC<Tokens> = ({ LS_ACCESS_TOKEN, LS_REFRESH_TOKEN }): Rea
     }
 
     const logout: VoidFunction = async (): Promise<void> => {
-        await axios.delete("/logout", {
+        await axios.delete(process.env.REACT_APP_API_URL + "/logout", {
             data: {
                 token: localStorage.getItem(LS_REFRESH_TOKEN as string)
             }
@@ -195,7 +195,7 @@ const Dashboard: React.FC<Tokens> = ({ LS_ACCESS_TOKEN, LS_REFRESH_TOKEN }): Rea
 
         const token: string = localStorage.getItem(LS_ACCESS_TOKEN as string) as string
 
-        const resp: AxiosResponse = await axios.get("/info", {
+        const resp: AxiosResponse = await axios.get(process.env.REACT_APP_API_URL + "/info", {
             headers: {
                 authorization: `Bearer ${token}`
             }
@@ -213,7 +213,7 @@ const Dashboard: React.FC<Tokens> = ({ LS_ACCESS_TOKEN, LS_REFRESH_TOKEN }): Rea
         clearButton.className = "button-clear"
         clearButton.innerText = "Clear"
         clearButton.onclick = async (): Promise<void> => {
-            await axios.get("/resetnotifications", {
+            await axios.get(process.env.REACT_APP_API_URL + "/resetnotifications", {
                 headers: {
                     authorization: `Bearer ${token}`
                 }

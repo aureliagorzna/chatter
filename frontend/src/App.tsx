@@ -13,6 +13,7 @@ const App: React.FC = (): ReactElement => {
     <div className="App">
       <Router>
         <Routes>
+          <Route path="/" element={<Login LS_ACCESS_TOKEN={LS_ACCESS_TOKEN} LS_REFRESH_TOKEN={LS_REFRESH_TOKEN} />} />
           <Route path="/login" element={<Login LS_ACCESS_TOKEN={LS_ACCESS_TOKEN} LS_REFRESH_TOKEN={LS_REFRESH_TOKEN} />} />
           <Route path="/new" element={<NewAcc />} />
           <Route path="/posts" element={<Dashboard LS_ACCESS_TOKEN={LS_ACCESS_TOKEN} LS_REFRESH_TOKEN={LS_REFRESH_TOKEN} />} />

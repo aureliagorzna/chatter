@@ -16,7 +16,7 @@ const Login: React.FC<tokens> = ({ LS_ACCESS_TOKEN, LS_REFRESH_TOKEN }): ReactEl
         if (nameRef.current == null || pwRef.current == null) return
 
         try {
-            const resp: AxiosResponse = await axios.post("/login", {
+            const resp: AxiosResponse = await axios.post(process.env.REACT_APP_API_URL + "/login", {
                 username: nameRef.current.value,
                 password: pwRef.current.value
             })

@@ -2,7 +2,7 @@ POST http://localhost:5000/new
 Content-Type: application/json
 
 {
-    "username": "olek",
+    "username": "admin2",
     "password": "haslo"
 }
 
@@ -12,7 +12,7 @@ POST http://localhost:5000/login
 Content-Type: application/json
 
 {
-    "username": "olek",
+    "username": "admin2",
     "password": "haslo"
 }
 

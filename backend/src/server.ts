@@ -10,14 +10,23 @@ import bcrypt from 'bcrypt'
 import Conversation from './models/Conversation'
 import Message from './models/Message'
 import Notification from './models/Notification'
+import cors from 'cors'
 
 connect(process.env.DATABASE_URL as string)
 const app: Application = express()
 app.use(express.json())
+app.use(cors({ origin: '*' }))
 
 let refreshTokens: string[] = []
 
-const generateAccessToken = (user: userProps): string => jwt.sign({ _id: user._id, username: user.username, id: user.id, notifications: user.notifications, conversations: user.conversations, friends: user.friends }, process.env.ACCESS_TOKEN as string, { expiresIn: "10m" })
+const generateAccessToken = (user: userProps): string => jwt.sign({ 
+    _id: user._id, 
+    username: user.username, 
+    id: user.id, 
+    notifications: user.notifications, 
+    conversations: user.conversations, 
+    friends: user.friends 
+}, process.env.ACCESS_TOKEN as string, { expiresIn: "10m" })
 const generateRefreshToken = (user: userProps): string => jwt.sign({ _id: user._id, username: user.username, id: user.id, notifications: user.notifications, conversations: user.conversations, friends: user.friends }, process.env.REFRESH_TOKEN as string)
 
 const authorize = (req: Request, res: Response, next: NextFunction): Response<any, Record<string, any>> | void => {
