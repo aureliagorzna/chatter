@@ -15,7 +15,13 @@ import cors from 'cors'
 connect(process.env.DATABASE_URL as string)
 const app: Application = express()
 app.use(express.json())
-app.use(cors({ origin: ['http://localhost', 'https://chatter-frontend-delta.vercel.app/'] }))
+app.use(cors())
+
+// app.use((req, res, next) => {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     next();
+// });
 
 let refreshTokens: string[] = []
 
