@@ -15,7 +15,7 @@ import cors from 'cors'
 connect(process.env.DATABASE_URL as string)
 const app: Application = express()
 app.use(express.json())
-app.use(cors({ origin: process.env.ALLOWED_DOMAIN }))
+app.use(cors({ origin: '*' }))
 
 let refreshTokens: string[] = []
 
@@ -27,7 +27,7 @@ const generateAccessToken = (user: userProps): string => jwt.sign({
     conversations: user.conversations, 
     friends: user.friends 
 }, process.env.ACCESS_TOKEN_SECRET as string, { expiresIn: "10m" })
-const generateRefreshToken = (user: userProps): string => jwt.sign({ _id: user._id, username: user.username, id: user.id, notifications: user.notifications, conversations: user.conversations, friends: user.friends }, process.env.REFRESH_TOKEN as string)
+const generateRefreshToken = (user: userProps): string => jwt.sign({ _id: user._id, username: user.username, id: user.id, notifications: user.notifications, conversations: user.conversations, friends: user.friends }, process.env.REFRESH_TOKEN_SECRET as string)
 
 const authorize = (req: Request, res: Response, next: NextFunction): Response<any, Record<string, any>> | void => {
     const header = req.headers["authorization"]
@@ -104,7 +104,7 @@ app.post("/token", (req: Request, res: Response): Response<any, Record<string, a
     if (req.body.token == null) return res.send("Failed")
     const token: string = req.body.token
 
-    jwt.verify(token, process.env.REFRESH_TOKEN as string, (err, user): Response<any, Record<string, any>> | void => {
+    jwt.verify(token, process.env.REFRESH_TOKEN_SECRET as string, (err, user): Response<any, Record<string, any>> | void => {
         if (err) return res.send("Failed")
         if (!refreshTokens.includes(token)) return res.send("Failed")
         if (user == null) return
