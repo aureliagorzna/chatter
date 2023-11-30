@@ -15,7 +15,7 @@ import cors from 'cors'
 connect(process.env.DATABASE_URL as string)
 const app: Application = express()
 app.use(express.json())
-app.use(cors({ origin: '*' }))
+app.use(cors({ origin: ['http://localhost', 'https://chatter-frontend-delta.vercel.app/'] }))
 
 let refreshTokens: string[] = []
 
