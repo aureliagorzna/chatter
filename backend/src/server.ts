@@ -4,7 +4,7 @@ dotenv.config()
 import express, { Application, Request, Response, NextFunction } from 'express'
 import { connect, Types } from 'mongoose'
 import User from './models/User'
-import { conversation, message, userProps } from './interfaces'
+import { conversation, userProps } from './interfaces'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import Conversation from './models/Conversation'
@@ -15,7 +15,7 @@ import cors from 'cors'
 connect(process.env.DATABASE_URL as string)
 const app: Application = express()
 app.use(express.json())
-app.use(cors())
+app.use(cors({ origin: "*" }))
 
 // app.use((req, res, next) => {
 //     res.header("Access-Control-Allow-Origin", "*");
